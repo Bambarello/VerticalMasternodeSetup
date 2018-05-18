@@ -1,18 +1,18 @@
 #!/bin/bash
-# REDEN Masternode Setup Script V1.3 for Ubuntu 16.04 LTS
-# (c) 2018 by Allroad [FasterPool.com] for Reden 
+# Vertical Masternode Setup Script V1.3 for Ubuntu 16.04 LTS
+# (c) 2018 by Dwigt007 for Vertical
 #
 # Script will attempt to autodetect primary public IP address
 # and generate masternode private key unless specified in command line
 #
 # Usage:
-# bash reden-setup.sh [Masternode_Private_Key]
+# bash vertical-setup.sh [Masternode_Private_Key]
 #
 # Example 1: Existing genkey created earlier is supplied
-# bash reden-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
+# bash vertical-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
 #
 # Example 2: Script will generate a new genkey automatically
-# bash reden-setup.sh
+# bash vertical-setup.sh
 #
 
 #Color codes
@@ -21,8 +21,8 @@ GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-#Reden TCP port
-PORT=13058
+#Vertical TCP port
+PORT=54111
 
 #Clear keyboard input buffer
 function clear_stdin { while read -r -t 0; do read -r; done; }
@@ -32,17 +32,17 @@ function delay { echo -e "${GREEN}Sleep for $1 seconds...${NC}"; sleep "$1"; }
 
 #Stop daemon if it's already running
 function stop_daemon {
-    if pgrep -x 'redend' > /dev/null; then
-        echo -e "${YELLOW}Attempting to stop redend${NC}"
-        reden-cli stop
+    if pgrep -x 'verticalcoind' > /dev/null; then
+        echo -e "${YELLOW}Attempting to stop verticalcoind${NC}"
+        ./verticalcoin-cli stop
         delay 30
-        if pgrep -x 'redend' > /dev/null; then
-            echo -e "${RED}redend daemon is still running!${NC} \a"
+        if pgrep -x 'verticalcoind' > /dev/null; then
+            echo -e "${RED}verticalcoind daemon is still running!${NC} \a"
             echo -e "${YELLOW}Attempting to kill...${NC}"
-            pkill redend
+            pkill ./verticalcoind
             delay 30
-            if pgrep -x 'redend' > /dev/null; then
-                echo -e "${RED}Can't stop redend! Reboot and try again...${NC} \a"
+            if pgrep -x 'verticalcoind' > /dev/null; then
+                echo -e "${RED}Can't stop verticalcoind! Reboot and try again...${NC} \a"
                 exit 2
             fi
         fi
@@ -53,7 +53,7 @@ function stop_daemon {
 genkey=$1
 
 clear
-echo -e "${YELLOW}REDEN Masternode Setup Script V1.2 for Ubuntu 16.04 LTS${NC}"
+echo -e "${YELLOW}Vertcal Masternode Setup Script V1.3 for Ubuntu 16.04 LTS${NC}"
 echo -e "${GREEN}Updating system and installing required packages...${NC}"
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 
@@ -64,11 +64,11 @@ publicip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 if [ -n "$publicip" ]; then
     echo -e "${YELLOW}IP Address detected:" $publicip ${NC}
 else
-    echo -e "${RED}ERROR:${YELLOW} Public IP Address was not detected!${NC} \a"
+    echo -e "${RED}ERROR: Public IP Address was not detected!${NC} \a"
     clear_stdin
     read -e -p "Enter VPS Public IP Address: " publicip
     if [ -z "$publicip" ]; then
-        echo -e "${RED}ERROR:${YELLOW} Public IP Address must be provided. Try again...${NC} \a"
+        echo -e "${RED}ERROR: Public IP Address must be provided. Try again...${NC} \a"
         exit 1
     fi
 fi
@@ -99,11 +99,14 @@ sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow ssh
 sudo ufw allow $PORT/tcp
+sudo ufw allow 22/tcp
+sudo ufw limit 22/tcp
 echo -e "${YELLOW}"
 sudo ufw --force enable
 echo -e "${NC}"
 
-#Generating Random Password for redend JSON RPC
+#Generating Random Password for verticalcoind JSON RPC
+rpcuser=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 rpcpassword=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 #Create 2GB swap file
@@ -127,59 +130,59 @@ fi
 
 #Installing Daemon
 cd ~
-#sudo rm reden_ubuntu16_1.0.0_linux.gz
-#wget https://github.com/NicholasAdmin/Reden/releases/download/Wallet/reden_ubuntu16_1.0.0_linux.gz
-#sudo tar -xzvf reden_ubuntu16_1.0.0_linux.gz --strip-components 1 --directory /usr/bin
-#sudo rm reden_ubuntu16_1.0.0_linux.gz
-
+sudo rm verticalcoin-v0.1-linux.zip
+wget https://github.com/verticalcoin/verticalcoin/releases/download/v0.1/verticalcoin-v0.1-linux.zip
+unzip verticalcoin-v0.1-linux.zip
+rm -r verticalcoin-v0.1-linux.zip
 stop_daemon
 
 # Deploy binaries to /usr/bin
-sudo cp RedenMasternodeSetup/Reden-v1.0-Ubuntu16.04/reden* /usr/bin/
+#sudo cp VerticalMasternodeSetup/verticalcoin-v0.1-linux.zip/verticalcoin* /usr/bin/
 sudo chmod 755 -R ~/RedenMasternodeSetup
-sudo chmod 755 /usr/bin/reden*
+sudo chmod 755 /usr/bin/verticalcoin*
 
 # Deploy masternode monitoring script
-cp ~/RedenMasternodeSetup/nodemon.sh /usr/local/bin
+cp ~/VerticalMasternodeSetup/nodemon.sh /usr/local/bin
 sudo chmod 711 /usr/local/bin/nodemon.sh
 
-#Create reden datadir
-if [ ! -f ~/.redencore/reden.conf ]; then 
-	sudo mkdir ~/.redencore
+#Create datadir
+if [ ! -f ~/.verticalcoin/verticalcoin.conf ]; then 
+	sudo mkdir ~/.verticalcoin
+        
 fi
 
-echo -e "${YELLOW}Creating reden.conf...${NC}"
+echo -e "${YELLOW}Creating verticalcoin.conf...${NC}"
 
 # If genkey was not supplied in command line, we will generate private key on the fly
 if [ -z $genkey ]; then
-    cat <<EOF > ~/.redencore/reden.conf
-rpcuser=redenrpc
+    cat <<EOF > ~/.verticalcoin/verticalcoin.conf
+rpcuser=$rpcuser
 rpcpassword=$rpcpassword
 EOF
 
-    sudo chmod 755 -R ~/.redencore/reden.conf
+    sudo chmod 755 -R ~/.verticalcoin/verticalcoin.conf
 
     #Starting daemon first time just to generate masternode private key
-    redend -daemon
+    ./verticalcoind --daemon
     delay 30
 
     #Generate masternode private key
     echo -e "${YELLOW}Generating masternode private key...${NC}"
-    genkey=$(reden-cli masternode genkey)
+    genkey=$(./verticalcoin-cli masternode genkey)
     if [ -z "$genkey" ]; then
-        echo -e "${RED}ERROR:${YELLOW}Can not generate masternode private key.$ \a"
-        echo -e "${RED}ERROR:${YELLOW}Reboot VPS and try again or supply existing genkey as a parameter."
+        echo -e "${RED}ERROR: Can not generate masternode private key.${NC} \a"
+        echo -e "${RED}ERROR: Reboot VPS and try again or supply existing genkey as a parameter.${NC}"
         exit 1
     fi
     
-    #Stopping daemon to create reden.conf
+    #Stopping daemon to create verticalcoin.conf
     stop_daemon
     delay 30
 fi
 
 # Create reden.conf
-cat <<EOF > ~/.redencore/reden.conf
-rpcuser=redenrpc
+cat <<EOF > ~/.verticalcoin/verticalcoin.conf
+rpcuser=$rpcuser
 rpcpassword=$rpcpassword
 rpcallowip=127.0.0.1
 onlynet=ipv4
@@ -192,12 +195,12 @@ masternode=1
 masternodeprivkey=$genkey
 EOF
 
-#Finally, starting reden daemon with new reden.conf
-redend
+#Finally, starting vertical daemon with new verticalcoin.conf
+./verticalcoind
 delay 5
 
 #Setting auto star cron job for redend
-cronjob="@reboot sleep 30 && redend"
+cronjob="@reboot sleep 30 && ./verticalcoind"
 crontab -l > tempcron
 if ! grep -q "$cronjob" tempcron; then
     echo -e "${GREEN}Configuring crontab job...${NC}"
