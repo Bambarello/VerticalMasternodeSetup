@@ -22,7 +22,7 @@ Address               (ms)   (KBytes)   Block  Syncd  Blocks  (min)  Score
 echo '==========================================================================='
 uptime
 echo '==========================================================================='
-echo 'Masternode Status: \n# ./verticalcoin-cli masternode status' && ./verticalcoin-cli -datadir=$datadir masternode status
+echo 'Masternode Status: \n# ./verticalcoin-cli vnode status' && ./verticalcoin-cli -datadir=$datadir vnode status
 echo '==========================================================================='
 echo 'Sync Status: \n# ./verticalcoin-cli mnsync status' &&  ./verticalcoin-cli -datadir=$datadir mnsync status
 echo '==========================================================================='
