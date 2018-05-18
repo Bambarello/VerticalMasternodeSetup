@@ -140,6 +140,8 @@ stop_daemon
 #sudo cp VerticalMasternodeSetup/verticalcoin-v0.1-linux.zip/verticalcoin* /usr/bin/
 sudo chmod 755 -R ~/RedenMasternodeSetup
 sudo chmod 755 /usr/bin/verticalcoin*
+sudo chmod 755 ./verticalcoind
+sudo chmod 755 ./verticalcoin-cli
 
 # Deploy masternode monitoring script
 cp ~/VerticalMasternodeSetup/nodemon.sh /usr/local/bin
