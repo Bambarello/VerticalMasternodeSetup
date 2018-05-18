@@ -32,16 +32,16 @@ function delay { echo -e "${GREEN}Sleep for $1 seconds...${NC}"; sleep "$1"; }
 
 #Stop daemon if it's already running
 function stop_daemon {
-    if pgrep -x 'verticalcoind' > /dev/null; then
+    if pgrep -x './verticalcoind' > /dev/null; then
         echo -e "${YELLOW}Attempting to stop verticalcoind${NC}"
         ./verticalcoin-cli stop
         delay 30
-        if pgrep -x 'verticalcoind' > /dev/null; then
+        if pgrep -x './verticalcoind' > /dev/null; then
             echo -e "${RED}verticalcoind daemon is still running!${NC} \a"
             echo -e "${YELLOW}Attempting to kill...${NC}"
             pkill ./verticalcoind
             delay 30
-            if pgrep -x 'verticalcoind' > /dev/null; then
+            if pgrep -x './verticalcoind' > /dev/null; then
                 echo -e "${RED}Can't stop verticalcoind! Reboot and try again...${NC} \a"
                 exit 2
             fi
@@ -139,7 +139,7 @@ stop_daemon
 # Deploy binaries to /usr/bin
 #sudo cp VerticalMasternodeSetup/verticalcoin-v0.1-linux.zip/verticalcoin* /usr/bin/
 sudo chmod 755 -R ~/RedenMasternodeSetup
-sudo chmod 755 /usr/bin/verticalcoin*
+#sudo chmod 755 /usr/bin/verticalcoin*
 sudo chmod 755 ./verticalcoind
 sudo chmod 755 ./verticalcoin-cli
 
@@ -163,14 +163,15 @@ rpcpassword=$rpcpassword
 EOF
 
     sudo chmod 755 -R ~/.verticalcoin/verticalcoin.conf
-
+    sudo chmod 755 -R ./verticalcoind
+    sudo chmod 755 -R ./verticalcoin-cli
     #Starting daemon first time just to generate masternode private key
     ./verticalcoind --daemon
     delay 30
 
     #Generate masternode private key
     echo -e "${YELLOW}Generating masternode private key...${NC}"
-    genkey=$(./verticalcoin-cli masternode genkey)
+    genkey=$(./verticalcoin-cli vnode genkey)
     if [ -z "$genkey" ]; then
         echo -e "${RED}ERROR: Can not generate masternode private key.${NC} \a"
         echo -e "${RED}ERROR: Reboot VPS and try again or supply existing genkey as a parameter.${NC}"
@@ -182,7 +183,7 @@ EOF
     delay 30
 fi
 
-# Create reden.conf
+# Create verticalcoin.conf
 cat <<EOF > ~/.verticalcoin/verticalcoin.conf
 rpcuser=$rpcuser
 rpcpassword=$rpcpassword
