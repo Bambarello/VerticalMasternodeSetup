@@ -54,9 +54,9 @@ the collateral for this masternode is secured in your wallet. Without this step 
 
 Basically all you need to do is just edit the __vnode.conf__ text file located in your hot wallet __data directory__ to enter a few masternode parameters, restart the wallet and then issue a start command for this new vnode.
 
-There are two ways to edit __vnode.conf__. The easiest way is to open the file from within the wallet app (Tools -> Open vnode Configuration File). Optionally, you can open it from the wallet data folder directly by navigating to the %appdata%/roaming/verticalcoin. Just hit Win+R, paste %appdata%/roaming/verticalcoin, hit Enter and then open **vnode.conf** with Notepad for editing. 
+There is only one way to edit __vnode.conf__. You can open it from the wallet data folder directly by navigating to the %appdata%/roaming/verticalcoin. Just hit Win+R, paste %appdata%/roaming/verticalcoin, hit Enter and then open **vnode.conf** with Notepad for editing. 
 
-It does not matter which way you open the file or how you edit it. In either case you will need to restart your wallet when you are done in order for it to pickup the changes you made in the file. Make sure to save it before you restart your wallet.
+You will need to restart your wallet when you are done in order for it to pickup the changes you made in the file. Make sure to save it before you restart your wallet.
 
 __Here's what you need to do in vnode.conf file__. For each masternode you are going to setup, you need to enter one separate line of text  which will look like this:
 
