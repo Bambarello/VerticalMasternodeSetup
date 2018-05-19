@@ -210,11 +210,11 @@ addnode=H10.vrtnode.ovh
 EOF
 
 #Finally, starting vertical daemon with new verticalcoin.conf
-./verticalcoind
+./verticalcoind --daemon
 delay 5
 
 #Setting auto star cron job for daemon
-cronjob="@reboot sleep 30 && ./verticalcoind"
+cronjob="@reboot sleep 30 && ./verticalcoind --daemon"
 crontab -l > tempcron
 if ! grep -q "$cronjob" tempcron; then
     echo -e "${GREEN}Configuring crontab job...${NC}"
