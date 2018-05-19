@@ -194,8 +194,8 @@ server=1
 daemon=1
 maxconnections=64
 externalip=$publicip
-masternode=1
-masternodeprivkey=$genkey
+vnode=1
+vnodeprivkey=$genkey
 addnode=seed1.vrtseed.ovh
 addnode=H01.vrtnode.ovh
 addnode=H02.vrtnode.ovh
@@ -328,6 +328,7 @@ or just type 'node' and hit <TAB> to autocomplete script name.
 Enjoy your Vertical Vnode and thanks for using this setup script!
 
 If you found it helpful, please donate Vertical to:
+VDjtpU5miHbtpS444u1bDWpZfdZWgX8kzF
 
 
 ...and make sure to check back for updates!
