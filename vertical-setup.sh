@@ -196,6 +196,17 @@ maxconnections=64
 externalip=$publicip
 masternode=1
 masternodeprivkey=$genkey
+addnode=seed1.vrtseed.ovh
+addnode=H01.vrtnode.ovh
+addnode=H02.vrtnode.ovh
+addnode=H03.vrtnode.ovh
+addnode=H04.vrtnode.ovh
+addnode=H05.vrtnode.ovh
+addnode=H06.vrtnode.ovh
+addnode=H07.vrtnode.ovh
+addnode=H08.vrtnode.ovh
+addnode=H09.vrtnode.ovh
+addnode=H10.vrtnode.ovh
 EOF
 
 #Finally, starting vertical daemon with new verticalcoin.conf
