@@ -24,9 +24,7 @@ uptime
 echo '==========================================================================='
 echo 'Masternode Status: \n# ./verticalcoin-cli vnode status' && ./verticalcoin-cli -datadir=$datadir vnode status
 echo '==========================================================================='
-echo 'Sync Status: \n# ./verticalcoin-cli mnsync status' &&  ./verticalcoin-cli -datadir=$datadir mnsync status
-echo '==========================================================================='
-echo 'Masternode Information: \n# ./verticalcoin-clii getinfo' && ./verticalcoin-cli -datadir=$datadir getinfo
+echo 'Masternode Information: \n# ./verticalcoin-cli getinfo' && ./verticalcoin-cli -datadir=$datadir getinfo
 echo '==========================================================================='
 echo 'Usage: nodemon.sh [refresh delay] [datadir index]'
 echo 'Example: nodemon.sh 10 22 will run every 10 seconds and query verticalcoind in /$USER/.verticalcoin22'
