@@ -6,7 +6,7 @@
 # and generate masternode private key unless specified in command line
 #
 # Usage:
-# bash vertical-setup.sh [Masternode_Private_Key]
+# bash vertical-setup.sh [Vnode_Private_Key]
 #
 # Example 1: Existing genkey created earlier is supplied
 # bash vertical-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
