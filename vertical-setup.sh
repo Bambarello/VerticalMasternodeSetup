@@ -165,12 +165,12 @@ EOF
     sudo chmod 755 -R ~/.verticalcoin/verticalcoin.conf
     sudo chmod 755 -R ./verticalcoind
     sudo chmod 755 -R ./verticalcoin-cli
-    #Starting daemon first time just to generate masternode private key
+    #Starting daemon first time just to generate Vnode private key
     ./verticalcoind --daemon
     delay 30
 
-    #Generate masternode private key
-    echo -e "${YELLOW}Generating masternode private key...${NC}"
+    #Generate Vnode private key
+    echo -e "${YELLOW}Generating Vnode private key...${NC}"
     genkey=$(./verticalcoin-cli vnode genkey)
     if [ -z "$genkey" ]; then
         echo -e "${RED}ERROR: Can not generate masternode private key.${NC} \a"
@@ -224,12 +224,12 @@ fi
 rm tempcron
 
 echo -e "========================================================================
-${YELLOW}Masternode setup is complete!${NC}
+${YELLOW}Vnode setup is complete!${NC}
 ========================================================================
 
-Masternode was installed with VPS IP Address: ${YELLOW}$publicip${NC}
+Vnode was installed with VPS IP Address: ${YELLOW}$publicip${NC}
 
-Masternode Private Key: ${YELLOW}$genkey${NC}
+Vnode Private Key: ${YELLOW}$genkey${NC}
 
 Now you can add the following string to the vnode.conf file
 for your Hot Wallet (the wallet with your vertical collateral funds):
@@ -240,12 +240,12 @@ echo -e "=======================================================================
 Use your mouse to copy the whole string above into the clipboard by
 tripple-click + single-click (Dont use Ctrl-C) and then paste it 
 into your ${YELLOW}vnode.conf${NC} file and replace:
-    ${YELLOW}mn1${NC} - with your desired masternode name (alias)
-    ${YELLOW}TxId${NC} - with Transaction Id from masternode outputs
+    ${YELLOW}mn1${NC} - with your desired vnode name (alias)
+    ${YELLOW}TxId${NC} - with Transaction Id from vnode outputs
     ${YELLOW}TxIdx${NC} - with Transaction Index (0 or 1)
      Remember to save the vnode.conf and restart the wallet!
 
-To introduce your new masternode to the Vertical network, you need to
+To introduce your new vnode to the Vertical network, you need to
 issue a vnode start command from your wallet, which proves that
 the collateral for this node is secured."
 
@@ -258,14 +258,14 @@ to 'true', which will indicate a comlete sync, although it may take
 from several minutes to several hours depending on the network state.
 Your initial Masternode Status may read:
     ${YELLOW}Node just started, not yet activated${NC} or
-    ${YELLOW}Node  is not in masternode list${NC}, which is normal and expected.
+    ${YELLOW}Node  is not in vnode list${NC}, which is normal and expected.
 
 2) Wait at least until 'IsBlockchainSynced' status becomes 'true'.
 At this point you can go to your wallet and issue a start
 command by either using Debug Console:
     Tools->Debug Console-> enter: ${YELLOW}vnode start-alias mn1${NC}
     where ${YELLOW}vn1${NC} is the name of your vnodenode (alias)
-    as it was entered in the masternode.conf file
+    as it was entered in the vnode.conf file
     
 or by using wallet GUI:
     vnodes -> Select vnode -> RightClick -> ${YELLOW}start alias${NC}
