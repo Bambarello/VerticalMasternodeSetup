@@ -1,10 +1,10 @@
-## Reden Masternode Installation
+## Vertical Vnode Installation
 
 **NOTE:** This installation guide is provided as is with no warranties of any kind.
 
 **NOTE:** This newer version of the script (v1.1) does not ask for IP address or masternode genkey anymore. Instead the __script will detect VPS IP Address and generate Masternode Private Key (genkey) automatically__. It will also create a 2GB swap file.
 
-If you follow the steps and use a newly installed Ubuntu 16.04 VPS, it will automatically configure and start your Master Node. Ubuntu 17.10 and other Linux distros ate not currently supported.
+If you follow the steps and use a newly installed Ubuntu 16.04 VPS, it will automatically configure and start your  VNode. Ubuntu 17.10 and other Linux distros ate not currently supported.
 
 Steps:
 
@@ -12,7 +12,7 @@ Steps:
 
 **1)** In Windows wallet, **create a new receiving address** and name it **mn1** for example.
 
-**2) Send exactly 5000 REDEN to this new address**. NOTE: if you are setting up many msternodes and wish to perform multiple 5k payments in a row before following through steps (3)-(6), make sure you select correct __inputs__ for each payment or __lock__ your 5k coins manually after each payment using Coin Control Features, otherwise your coins may get reused and only last payment will yield valid masternode output. The wallet will lock your payments automatically after you restart it in step (6).
+**2) Send exactly 3750 VTL to this new address**. NOTE: if you are setting up many msternodes and wish to perform multiple 5k payments in a row before following through steps (3)-(6), make sure you select correct __inputs__ for each payment or __lock__ your 5k coins manually after each payment using Coin Control Features, otherwise your coins may get reused and only last payment will yield valid masternode output. The wallet will lock your payments automatically after you restart it in step (6).
 
 **3) View masternode outputs** - output transaction ID and transaction index in wallet Debug Console (Tools -> Debug console) by typing:
 
