@@ -211,6 +211,7 @@ addnode=H10.vrtnode.ovh
 EOF
 
 #Finally, starting vertical daemon with new verticalcoin.conf
+cd ~
 ./verticalcoind --daemon
 delay 5
 
