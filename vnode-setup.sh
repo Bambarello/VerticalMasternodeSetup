@@ -1,18 +1,18 @@
 #!/bin/bash
-# Vertical Vnode Setup Script V1.3 for Ubuntu 16.04 LTS
-# (c) 2018 by Dwigt007 for Vertical
+# Vertical Vnode Setup Script V1.4 for Ubuntu 16.04 LTS
+# (c) 2018 by Dwigt007 for Vertical Coin
 #
 # Script will attempt to autodetect primary public IP address
 # and generate masternode private key unless specified in command line
 #
 # Usage:
-# bash vertical-setup.sh [Vnode_Private_Key]
+# bash vnode-setup.sh [Vnode_Private_Key]
 #
 # Example 1: Existing genkey created earlier is supplied
-# bash vertical-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
+# bash vnode-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
 #
 # Example 2: Script will generate a new genkey automatically
-# bash vertical-setup.sh
+# bash vnode-setup.sh
 #
 
 #Color codes
@@ -32,16 +32,16 @@ function delay { echo -e "${GREEN}Sleep for $1 seconds...${NC}"; sleep "$1"; }
 
 #Stop daemon if it's already running
 function stop_daemon {
-    if pgrep -x './verticalcoind' > /dev/null; then
+    if pgrep -x 'verticalcoind' > /dev/null; then
         echo -e "${YELLOW}Attempting to stop verticalcoind${NC}"
-        ./verticalcoin-cli stop
+        verticalcoin-cli stop
         delay 30
-        if pgrep -x './verticalcoind' > /dev/null; then
+        if pgrep -x 'verticalcoind' > /dev/null; then
             echo -e "${RED}verticalcoind daemon is still running!${NC} \a"
             echo -e "${YELLOW}Attempting to kill...${NC}"
-            pkill ./verticalcoind
+            pkill verticalcoind
             delay 30
-            if pgrep -x './verticalcoind' > /dev/null; then
+            if pgrep -x 'verticalcoind' > /dev/null; then
                 echo -e "${RED}Can't stop verticalcoind! Reboot and try again...${NC} \a"
                 exit 2
             fi
@@ -53,7 +53,7 @@ function stop_daemon {
 genkey=$1
 
 clear
-echo -e "${YELLOW}Vertical Vnode Setup Script V1.3 for Ubuntu 16.04 LTS${NC}"
+echo -e "${YELLOW}Vertical Vnode Setup Script V1.4 for Ubuntu 16.04 LTS${NC}"
 echo -e "${GREEN}Updating system and installing required packages...${NC}"
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 
@@ -130,18 +130,17 @@ fi
 
 #Installing Daemon
 cd ~
+mkdir ~/VerticalMasternodeSetup/verticalcoin-v0.1-linux
 sudo rm verticalcoin-v0.1-linux.zip
 wget https://github.com/verticalcoin/verticalcoin/releases/download/v0.1/verticalcoin-v0.1-linux.zip
-unzip verticalcoin-v0.1-linux.zip
+unzip verticalcoin-v0.1-linux.zip -d ~/VerticalMasternodeSetup/verticalcoin-v0.1-linux
 rm -r verticalcoin-v0.1-linux.zip
 stop_daemon
 
 # Deploy binaries to /usr/bin
-#sudo cp VerticalMasternodeSetup/verticalcoin-v0.1-linux.zip/verticalcoin* /usr/bin/
+sudo cp VerticalMasternodeSetup/verticalcoin-v0.1-linux/verticalcoin* /usr/bin/
 sudo chmod 755 -R ~/VerticalMasternodeSetup
-#sudo chmod 755 /usr/bin/verticalcoin*
-sudo chmod 755 ./verticalcoind
-sudo chmod 755 ./verticalcoin-cli
+sudo chmod 755 /usr/bin/verticalcoin*
 
 # Deploy masternode monitoring script
 cp ~/VerticalMasternodeSetup/nodemon.sh /usr/local/bin
@@ -163,15 +162,14 @@ rpcpassword=$rpcpassword
 EOF
 
     sudo chmod 755 -R ~/.verticalcoin/verticalcoin.conf
-    sudo chmod 755 -R ./verticalcoind
-    sudo chmod 755 -R ./verticalcoin-cli
+ 
     #Starting daemon first time just to generate Vnode private key
-    ./verticalcoind --daemon
+    verticalcoind --daemon
     delay 30
 
     #Generate Vnode private key
     echo -e "${YELLOW}Generating Vnode private key...${NC}"
-    genkey=$(./verticalcoin-cli vnode genkey)
+    genkey=$(verticalcoin-cli vnode genkey)
     if [ -z "$genkey" ]; then
         echo -e "${RED}ERROR: Can not generate masternode private key.${NC} \a"
         echo -e "${RED}ERROR: Reboot VPS and try again or supply existing genkey as a parameter.${NC}"
@@ -212,11 +210,11 @@ EOF
 
 #Finally, starting vertical daemon with new verticalcoin.conf
 cd ~
-./verticalcoind --daemon
+verticalcoind --daemon
 delay 5
 
 #Setting auto star cron job for daemon
-cronjob="@reboot sleep 30 && ./verticalcoind --daemon"
+cronjob="@reboot sleep 30 && verticalcoind --daemon"
 crontab -l > tempcron
 if ! grep -q "$cronjob" tempcron; then
     echo -e "${GREEN}Configuring crontab job...${NC}"
