@@ -34,7 +34,7 @@ function delay { echo -e "${GREEN}Sleep for $1 seconds...${NC}"; sleep "$1"; }
 function stop_daemon {
     if pgrep -x 'verticalcoind' > /dev/null; then
         echo -e "${YELLOW}Attempting to stop verticalcoind${NC}"
-        ./verticalcoin-cli stop
+        verticalcoin-cli stop
         delay 30
         if pgrep -x 'verticalcoind' > /dev/null; then
             echo -e "${RED}verticalcoind daemon is still running!${NC} \a"
