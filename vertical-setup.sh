@@ -188,13 +188,14 @@ cat <<EOF > ~/.verticalcoin/verticalcoin.conf
 rpcuser=$rpcuser
 rpcpassword=$rpcpassword
 rpcallowip=127.0.0.1
-onlynet=ipv4
 listen=1
 server=1
 daemon=1
+logtimestamps=1
 maxconnections=64
-externalip=$publicip
+txindex=1
 vnode=1
+externalip=$publicip:$PORT
 vnodeprivkey=$genkey
 addnode=seed1.vrtseed.ovh
 addnode=H01.vrtnode.ovh
