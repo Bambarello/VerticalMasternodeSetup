@@ -1,6 +1,6 @@
 ## Vertical Vnode Installation
 
-**NOTE:** This installation guide is provided as is with no warranties of any kind.
+**NOTE:** This installation guide is provided as is with no warranties of any kind. This script absolutely ONLY works with Ubuntu 16.04. Do not attempt to insall with any other OS!
 
 **NOTE:** This newer version of the script (v1.1) does not ask for IP address or masternode genkey anymore. Instead the __script will detect VPS IP Address and generate Masternode Private Key (genkey) automatically__. It will also create a 2GB swap file.
 
@@ -8,11 +8,11 @@ If you follow the steps and use a newly installed Ubuntu 16.04 VPS, it will auto
 
 Steps:
 
-**0) Create a new VPS** or use existing one. Recommended VPS resource configuration is similar to the vultr's $5/mo (25GB SSD/1xCPU/1GB RAM, Ubuntu 16.04). It can handle several MNs running simultaneously on the same public IP address but they have to use dirfferent ports. Therefore you cannot easily run more than one REDEN MN on the same box. Different coins are fine.
+**0) Create a new VPS** or use existing one. Recommended VPS resource configuration is similar to the vultr's $5/mo (25GB SSD/1xCPU/1GB RAM, Ubuntu 16.04). It can handle several MNs running simultaneously on the same public IP address but they have to use dirfferent ports. Therefore you cannot easily run more than one Virtical vnode on the same box. Different coins are fine.
 
-**1)** In Windows wallet, **create a new receiving address** and name it **mn1** for example.
+**1)** In Windows wallet, **create a new receiving address** and name it **vn1** for example.
 
-**2) Send exactly 3750 VTL to this new address**. NOTE: if you are setting up many msternodes and wish to perform multiple 3750 payments in a row before following through steps (3)-(6), make sure you select correct __inputs__ for each payment or __lock__ your 3750 coins manually after each payment using Coin Control Features, otherwise your coins may get reused and only last payment will yield valid masternode output. The wallet will lock your payments automatically after you restart it in step (6).
+**2) Send exactly 3750 VTL to this new address**. NOTE: if you are setting up many msternodes and wish to perform multiple 3750 payments in a row before following through steps (3)-(6), make sure you select correct __inputs__ for each payment or __lock__ your 3750 coins manually after each payment using Coin Control Features, otherwise your coins may get reused and only last payment will yield valid vnode output. The wallet will lock your payments automatically after you restart it in step (6).
 
 **3) View vnode outputs** - output transaction ID and transaction index in wallet Debug Console (Tools -> Debug console) by typing:
 
