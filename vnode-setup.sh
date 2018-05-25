@@ -130,15 +130,15 @@ fi
 
 #Installing Daemon
 cd ~
-mkdir ~/VerticalMasternodeSetup/verticalcoin-v0.1-linux
+mkdir ~/VerticalMasternodeSetup/verticalcoin-Linux64-V1.2.1
 sudo rm verticalcoin-v0.1-linux.zip
-wget https://github.com/verticalcoin/verticalcoin/releases/download/v0.1/verticalcoin-v0.1-linux.zip
-unzip verticalcoin-v0.1-linux.zip -d ~/VerticalMasternodeSetup/verticalcoin-v0.1-linux
-rm -r verticalcoin-v0.1-linux.zip
+wget https://github.com/verticalcoin/verticalcoin/releases/download/V1.2.1/verticalcoin-Linux64-V1.2.1.zip
+unzip verticalcoin-v0.1-linux.zip -d ~/VerticalMasternodeSetup/verticalcoin-Linux64-V1.2.1
+rm -r verticalcoin-Linux64-V1.2.1
 stop_daemon
 
 # Deploy binaries to /usr/bin
-sudo cp VerticalMasternodeSetup/verticalcoin-v0.1-linux/verticalcoin* /usr/bin/
+sudo cp VerticalMasternodeSetup/verticalcoin-Linux64-V1.2.1/verticalcoin* /usr/bin/
 sudo chmod 755 -R ~/VerticalMasternodeSetup
 sudo chmod 755 /usr/bin/verticalcoin*
 
