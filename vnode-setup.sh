@@ -132,8 +132,8 @@ fi
 cd ~
 mkdir ~/VerticalMasternodeSetup/verticalcoin-v0.1-linux
 sudo rm verticalcoin-v0.1-linux.zip
--wget https://github.com/verticalcoin/verticalcoin/releases/download/v0.1/verticalcoin-v0.1-linux.zip
--unzip verticalcoin-v0.1-linux.zip -d ~/VerticalMasternodeSetup/verticalcoin-v0.1-linux
+wget https://github.com/verticalcoin/verticalcoin/releases/download/v0.1/verticalcoin-v0.1-linux.zip
+unzip verticalcoin-v0.1-linux.zip -d ~/VerticalMasternodeSetup/verticalcoin-v0.1-linux
 rm -r verticalcoin-v0.1-linux.zip
 stop_daemon
 
