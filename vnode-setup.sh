@@ -72,6 +72,9 @@ else
         exit 1
     fi
 fi
+#kill Daemon
+pkill ./verticalcoind
+pkill verticalcoind
 
 # update packages and upgrade Ubuntu
 sudo apt-get -y upgrade
@@ -133,8 +136,8 @@ cd ~
 mkdir ~/VerticalMasternodeSetup/verticalcoin-Linux64-V1.2.1
 sudo rm verticalcoin-v0.1-linux.zip
 wget https://github.com/verticalcoin/verticalcoin/releases/download/V1.2.1/verticalcoin-Linux64-V1.2.1.zip
-unzip verticalcoin-v0.1-linux.zip -d ~/VerticalMasternodeSetup/verticalcoin-Linux64-V1.2.1
-rm -r verticalcoin-Linux64-V1.2.1
+unzip verticalcoin-Linux64-V1.2.1.zip -d ~/VerticalMasternodeSetup/verticalcoin-Linux64-V1.2.1
+rm -r verticalcoin-Linux64-V1.2.1.zip
 stop_daemon
 
 # Deploy binaries to /usr/bin
