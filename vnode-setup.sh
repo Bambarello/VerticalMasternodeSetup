@@ -73,8 +73,10 @@ else
     fi
 fi
 #kill Daemon
+cd ~
 pkill ./verticalcoind
 pkill verticalcoind
+cd VerticalMasternodeSetup
 
 # update packages and upgrade Ubuntu
 sudo apt-get -y upgrade
