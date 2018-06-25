@@ -143,7 +143,7 @@ rm -r linux-x64.tar.gz
 stop_daemon
 
 # Deploy binaries to /usr/bin
-sudo cp VerticalMasternodeSetup/verticalcoin-Linux64-V1.2.1/verticalcoin* /usr/bin/
+sudo cp VerticalMasternodeSetup/verticalcoin/verticalcoin* /usr/bin/
 sudo chmod 755 -R ~/VerticalMasternodeSetup
 sudo chmod 755 /usr/bin/verticalcoin*
 
