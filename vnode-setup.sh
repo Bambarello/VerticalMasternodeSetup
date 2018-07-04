@@ -1,18 +1,12 @@
 #!/bin/bash
-# Vertical Vnode Setup Script V1.4 for Ubuntu 16.04 LTS
+# Vertical Vnode Setup Script V1.5 for Ubuntu 16.04 LTS
 # (c) 2018 by Dwigt007 for Vertical Coin
 #
 # Script will attempt to autodetect primary public IP address
 # and generate masternode private key unless specified in command line
 #
 # Usage:
-# bash vnode-setup.sh [Vnode_Private_Key]
-#
-# Example 1: Existing genkey created earlier is supplied
-# bash vnode-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
-#
-# Example 2: Script will generate a new genkey automatically
-# bash vnode-setup.sh
+# bash vnode-setup.sh 
 #
 
 #Color codes
@@ -23,6 +17,14 @@ NC='\033[0m' # No Color
 
 #Vertical TCP port
 PORT=54111
+
+#Function detect_ubuntu
+ if [[ $(lsb_release -d) == *16.04* ]]; then
+   UBUNTU_VERSION=16
+else
+   echo -e "${RED}You are not running Ubuntu 16.04, Installation is cancelled.${NC}"
+   exit 1
+fi
 
 #Clear keyboard input buffer
 function clear_stdin { while read -r -t 0; do read -r; done; }
@@ -53,9 +55,22 @@ function stop_daemon {
 genkey=$1
 
 clear
-echo -e "${YELLOW}Vertical Vnode Setup Script V1.4 for Ubuntu 16.04 LTS${NC}"
-echo -e "${GREEN}Updating system and installing required packages...${NC}"
-sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
+echo -e "${YELLOW}Vertical Vnode Setup Script V1.5 for Ubuntu 16.04 LTS${NC}"
+echo "Do you want me to generate a masternode private key for you? [y/n]"
+  read DOSETUP
+if [[ $DOSETUP =~ "n" ]] ; then
+          read -e -p "Enter your private key:" genkey;
+              read -e -p "Confirm your private key: " genkey2;
+fi
+
+#Confirming match
+  if [ $genkey = $genkey2 ]; then
+     echo -e "${GREEN}MATCH! ${NC} \a" 
+else 
+     echo -e "${RED} Error: Private keys do not match. Try again or let me generate one for you...${NC} \a";exit 1
+fi
+sleep .5
+clear
 
 # Determine primary public IP address
 dpkg -s dnsutils 2>/dev/null >/dev/null || sudo apt-get -y install dnsutils
@@ -78,7 +93,14 @@ pkill ./verticalcoind
 pkill verticalcoind
 cd VerticalMasternodeSetup
 
-# update packages and upgrade Ubuntu
+#Check Deps
+if [ -d "/var/lib/fail2ban/" ]; 
+then
+    echo -e "${GREEN}Dependencies already installed...${NC}"
+else
+    echo -e "${GREEN}Updating system and installing required packages...${NC}"
+
+sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 sudo apt-get -y upgrade
 sudo apt-get -y dist-upgrade
 sudo apt-get -y autoremove
@@ -86,29 +108,54 @@ sudo apt-get -y install wget nano htop jq
 sudo apt-get -y install libzmq3-dev
 sudo apt-get -y install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev
 sudo apt-get -y install libevent-dev
-sudo apt-get install zip unzip
+sudo apt-get instal unzip
 sudo apt -y install software-properties-common
 sudo add-apt-repository ppa:bitcoin/bitcoin -y
 sudo apt-get -y update
 sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
-
+sudo apt-get install unzip
 sudo apt-get -y install libminiupnpc-dev
-
 sudo apt-get -y install fail2ban
 sudo service fail2ban restart
+sudo apt-get install libdb5.3++-dev libdb++-dev libdb5.3-dev libdb-dev && ldconfig
+sudo apt-get install -y unzip libzmq3-dev build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libboost-system1.58.0 libboost1.58-all-dev libdb4.8++ libdb4.8 libdb4.8-dev libdb4.8++-dev libevent-pthreads-2.0-5
+   fi
 
+#Network Settings
+echo -e "${GREEN}Installing Network Settings...${NC}"
+{
 sudo apt-get install ufw -y
+} &> /dev/null
+echo -ne '[##                 ]  (10%)\r'
+{
 sudo apt-get update -y
-
+} &> /dev/null
+echo -ne '[######             ] (30%)\r'
+{
 sudo ufw default deny incoming
+} &> /dev/null
+echo -ne '[#########          ] (50%)\r'
+{
 sudo ufw default allow outgoing
 sudo ufw allow ssh
+} &> /dev/null
+echo -ne '[###########        ] (60%)\r'
+{
 sudo ufw allow $PORT/tcp
+sudo ufw allow $RPC/tcp
+} &> /dev/null
+echo -ne '[###############    ] (80%)\r'
+{
 sudo ufw allow 22/tcp
 sudo ufw limit 22/tcp
+} &> /dev/null
+echo -ne '[#################  ] (90%)\r'
+{
 echo -e "${YELLOW}"
 sudo ufw --force enable
 echo -e "${NC}"
+} &> /dev/null
+echo -ne '[###################] (100%)\n'
 
 #Generating Random Password for verticalcoind JSON RPC
 rpcuser=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
