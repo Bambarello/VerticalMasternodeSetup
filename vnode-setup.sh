@@ -1,5 +1,5 @@
 #!/bin/bash
-# Vertical Vnode Setup Script V1.5 for Ubuntu 16.04 LTS
+# Vertical Vnode Setup Script V1.6 for Ubuntu 16.04 LTS
 # (c) 2018 by Dwigt007 for Vertical Coin
 #
 # Script will attempt to autodetect primary public IP address
@@ -55,7 +55,7 @@ function stop_daemon {
 genkey=$1
 
 clear
-echo -e "${YELLOW}Vertical Vnode Setup Script V1.5 for Ubuntu 16.04 LTS${NC}"
+echo -e "${YELLOW}Vertical Vnode Setup Script V1.6 for Ubuntu 16.04 LTS${NC}"
 echo "Do you want me to generate a masternode private key for you? [y/n]"
   read DOSETUP
 if [[ $DOSETUP =~ "n" ]] ; then
@@ -184,7 +184,7 @@ fi
 cd ~
 mkdir ~/VerticalMasternodeSetup/verticalcoin
 sudo rm verticalcoin-Linux64-V1.2.1
-wget https://github.com/verticalcoin/verticalcoin/releases/download/V1.3/linux-x64.tar.gz
+wget https://github.com/verticalcoin/verticalcoin/releases/download/1.4/linux-x64.tar.gz
 tar xzf linux-x64.tar.gz -C ~/VerticalMasternodeSetup/verticalcoin
 rm -r linux-x64.tar.gz
 stop_daemon
@@ -217,7 +217,7 @@ EOF
  
     #Starting daemon first time just to generate Vnode private key
     verticalcoind --daemon
-    delay 30
+    sleep 30
 
     #Generate Vnode private key
     echo -e "${YELLOW}Generating Vnode private key...${NC}"
